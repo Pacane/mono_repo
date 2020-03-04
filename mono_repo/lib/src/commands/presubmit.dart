@@ -129,7 +129,9 @@ Future<bool> presubmit(RootConfig configs,
           await file.create(recursive: true);
           await file.writeAsString(result.stdout as String);
           print(red.wrap('    failure, ${file.path}'));
-          passed = false;
+          print(red
+              .wrap('    skipping the rest of the build because of failure.'));
+          return false;
         }
       }
     }
