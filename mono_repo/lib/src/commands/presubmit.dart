@@ -128,7 +128,9 @@ Future<bool> presubmit(RootConfig configs,
               File(p.join(tmpDir.path, '${package}_${taskKey}_${job.sdk}.txt'));
           await file.create(recursive: true);
           await file.writeAsString(result.stdout as String);
+          await file.writeAsString(result.stderr as String);
           print(red.wrap('    failure, ${file.path}'));
+          print(red.wrap(result.stdout.toString()));
           print(red
               .wrap('    skipping the rest of the build because of failure.'));
           return false;

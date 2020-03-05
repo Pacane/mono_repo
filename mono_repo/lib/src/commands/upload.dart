@@ -41,7 +41,7 @@ Future<void> upload(RootConfig rootConfig, List<String> args) async {
 
     final runner = AppCommandRunner();
 
-    final i = await runner.run(['upload']);
+    final i = await runner.run(['upload', '-l', workingDir, '--type', 'dart']);
 
     final exit = i ?? 1;
 
