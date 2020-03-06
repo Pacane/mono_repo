@@ -94,7 +94,7 @@ Future<bool> presubmit(RootConfig configs,
   }
 
   // Status of the presubmit.
-  var passed = true;
+  const passed = true;
   for (var package in packages) {
     final config =
         configs.singleWhere((pkg) => pkg.relativePath == package, orElse: () {
