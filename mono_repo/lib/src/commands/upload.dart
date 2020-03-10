@@ -13,6 +13,17 @@ import '../root_config.dart';
 import 'mono_repo_command.dart';
 
 class UploadCommand extends MonoRepoCommand {
+  UploadCommand() {
+    UploadCommandRunner().argParser.options.forEach((k, v) {
+      if (v.name == 'help') {
+        return;
+      }
+
+      argParser.addOption(v.name,
+          abbr: v.abbr, help: v.help, defaultsTo: v.defaultsTo.toString());
+    });
+  }
+
   @override
   String get description => 'Upload all DSLinks';
 
@@ -20,10 +31,15 @@ class UploadCommand extends MonoRepoCommand {
   String get name => 'upload';
 
   @override
-  Future<void> run() => upload(rootConfig(), argResults.rest);
+  Future<void> run() {
+    final account = argResults['account'] as String;
+    final linkType = argResults['type'] as String;
+    return upload(rootConfig(), account, linkType, argResults.rest);
+  }
 }
 
-Future<void> upload(RootConfig rootConfig, List<String> args) async {
+Future<void> upload(RootConfig rootConfig, String account, String linkType,
+    List<String> args) async {
   final pkgDirs = rootConfig.map((pc) => pc.relativePath).toList();
 
   print(lightBlue.wrap('Uploading ${pkgDirs.length} package(s)'));
@@ -42,7 +58,7 @@ Future<void> upload(RootConfig rootConfig, List<String> args) async {
     final runner = AppCommandRunner();
 
     final i = await runner
-        .run(['upload', '-l', workingDir, '--type', 'dart']..addAll(args));
+        .run(['upload', '-l', workingDir, '--type', 'dart', '-a', account]);
 
     final exit = i ?? 1;
 
