@@ -42,7 +42,7 @@ Future<void> upload(RootConfig rootConfig, List<String> args) async {
     final runner = AppCommandRunner();
 
     final i = await runner
-        .run(['upload', '-l', workingDir, '--type', 'dart'].addAll(args));
+        .run(['upload', '-l', workingDir, '--type', 'dart']..addAll(args));
 
     final exit = i ?? 1;
 
