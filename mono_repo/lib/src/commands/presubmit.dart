@@ -121,6 +121,8 @@ Future<bool> presubmit(RootConfig configs,
         final result = await Process.run(travisShPath, [taskKey],
             environment: {'PKGS': package});
         if (result.exitCode == 0) {
+          print(result.stderr.toString());
+          print(result.stdout.toString());
           print(green.wrap('    success'));
         } else {
           tmpDir ??= Directory.systemTemp.createTempSync('mono_repo_');
@@ -131,6 +133,7 @@ Future<bool> presubmit(RootConfig configs,
           await file.writeAsString(result.stderr as String);
           print(red.wrap('    failure, ${file.path}'));
           print(red.wrap(result.stdout.toString()));
+          print(red.wrap(result.stderr.toString()));
           print(red
               .wrap('    skipping the rest of the build because of failure.'));
           return false;
