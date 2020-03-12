@@ -122,7 +122,6 @@ Future<bool> presubmit(RootConfig configs,
             environment: {'PKGS': package});
         if (result.exitCode == 0) {
           print(result.stderr.toString());
-          print(result.stdout.toString());
           print(green.wrap('    success'));
         } else {
           tmpDir ??= Directory.systemTemp.createTempSync('mono_repo_');
