@@ -94,7 +94,7 @@ Future<bool> presubmit(RootConfig configs,
   }
 
   // Status of the presubmit.
-  const passed = true;
+  var passed = true;
   for (var package in packages) {
     final config =
         configs.singleWhere((pkg) => pkg.relativePath == package, orElse: () {
@@ -121,7 +121,6 @@ Future<bool> presubmit(RootConfig configs,
         final result = await Process.run(travisShPath, [taskKey],
             environment: {'PKGS': package});
         if (result.exitCode == 0) {
-          print(result.stderr.toString());
           print(green.wrap('    success'));
         } else {
           tmpDir ??= Directory.systemTemp.createTempSync('mono_repo_');
@@ -129,12 +128,8 @@ Future<bool> presubmit(RootConfig configs,
               File(p.join(tmpDir.path, '${package}_${taskKey}_${job.sdk}.txt'));
           await file.create(recursive: true);
           await file.writeAsString(result.stdout as String);
-          await file.writeAsString(result.stderr as String);
           print(red.wrap('    failure, ${file.path}'));
-          print(red.wrap(result.stderr.toString()));
-          print(red
-              .wrap('    skipping the rest of the build because of failure.'));
-          return false;
+          passed = false;
         }
       }
     }

@@ -42,5 +42,6 @@ Available commands:
   presubmit   Run the travis presubmits locally.
   pub         Run `pub get` or `pub upgrade` against all packages.
   travis      Configure Travis-CI for child packages.
+  upload      Upload all DSLinks.
 
 Run "mono_repo help <command>" for more information about a command.''';

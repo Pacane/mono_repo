@@ -92,7 +92,7 @@ cache:
     - "$HOME/.pub-cache"
 ''';
 
-final _travisSh = '''
+const _travisSh = '''
 #!/bin/bash
 # Created with package:mono_repo v1.2.3
 

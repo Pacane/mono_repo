@@ -25,7 +25,7 @@ class UploadCommand extends MonoRepoCommand {
   }
 
   @override
-  String get description => 'Upload all DSLinks';
+  String get description => 'Upload all DSLinks.';
 
   @override
   String get name => 'upload';
